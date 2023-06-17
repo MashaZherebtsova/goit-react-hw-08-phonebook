@@ -2,17 +2,12 @@ import React from 'react';
 
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredContacts } from 'redux/selectors';
-import { deleteContact, fetchContacts } from 'redux/operation';
-import { useEffect } from 'react';
+import { selectFilteredContacts } from 'redux/contacts/selectors';
+import { deleteContact } from 'redux/contacts/operation';
 
 export function ContactsList() {
   const filteredContacts = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
 
   return (
     <ul className={css.contactList}>

@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://647f34e9c246f166da9055b7.mockapi.io';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
@@ -21,6 +22,7 @@ export const addContact = createAsyncThunk(
   async (contact, thunkAPI) => {
     try {
       const responce = await axios.post('/contacts', contact);
+
       return responce.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
