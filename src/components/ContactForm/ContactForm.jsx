@@ -41,7 +41,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div>
+    <>
       <form className={css.form} onSubmit={handleSubmit}>
         <label className={css.formLabel}>
           Name
@@ -73,6 +73,6 @@ export default function ContactForm() {
           Add Contact
         </button>
       </form>
-    </div>
+    </>
   );
 }

@@ -1,11 +1,12 @@
 import { useEffect, lazy } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
 import { refreshUser } from 'redux/auth/operations';
 import { useAuth } from './hooks/useAuth';
+import { selectToken } from 'redux/auth/selectors';
 
 const HomePage = lazy(() => import('../pages/Home'));
 const RegisterPage = lazy(() => import('../pages/Register'));
@@ -15,10 +16,14 @@ const ContactsPage = lazy(() => import('../pages/Contacts'));
 export const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
+  const token = useSelector(selectToken);
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+    if (token) {
+      dispatch(refreshUser());
+      return;
+    }
+  }, [dispatch, token]);
 
   return isRefreshing ? (
     <b>Refreshing user...</b>

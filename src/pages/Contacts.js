@@ -7,20 +7,25 @@ import { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLoading } from 'redux/contacts/selectors';
 import { fetchContacts } from 'redux/contacts/operation';
-import { Helmet } from 'react-helmet';
+
+import { selectToken } from 'redux/auth/selectors';
 
 export default function Contacts() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectLoading);
 
-  useEffect(() => {});
-  dispatch(fetchContacts(), [dispatch]);
+  const token = useSelector(selectToken);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchContacts());
+    }
+  }, [dispatch, token]);
 
   return (
-    <div>
-      <Helmet>
-        <h1 className={css.title}>Phonebook</h1>
-      </Helmet>
+    <div className={css.container}>
+      <h1 className={css.title}>Phonebook</h1>
+
       <ContactForm />
       <h2 className={css.title}> Contacts</h2>
       <Filter />
